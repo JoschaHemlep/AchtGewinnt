@@ -4,10 +4,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
 
-    <Grid Background="Blue">
+    <StackPanel>
         <TextBlock FontSize="24">Meeting</TextBlock>
-    </Grid>
+        <Grid>
+            <ListView x:Name="MeetingList" Grid.Column="0" />
+            <StackPanel Grid.Column="1">
+                <ComboBox x:Name="Rating" />
+                <TextBox x:Name="Title" />
+                <DatePicker x:Name="Date" />
+                <TextBox x:Name="Description" />
+            </StackPanel>
+        </Grid>
+
+    </StackPanel>
 </Page>

@@ -1,11 +1,11 @@
 ﻿
 using System;
 using System.Diagnostics;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
+using AchtGewinnt.ExtensionMethods;
 using AchtGewinnt.ViewModels;
 using ReactiveUI;
-using Splat;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 using EventsMixin = Windows.UI.Xaml.EventsMixin;
 
 namespace AchtGewinnt.Views
@@ -19,12 +19,15 @@ namespace AchtGewinnt.Views
             e.Handled = true;
 
             if (canExecute)
+            {
                 Router.NavigateBack.Execute();
+            }
         }
 
         public Shell()
         {
             InitializeComponent();
+
             DataContextChanged += (sender, args) => ViewModel = DataContext as ShellViewModel;
 
             ConfigureRouter();
@@ -38,6 +41,8 @@ namespace AchtGewinnt.Views
                 var bootstrapper = new Bootstrapper();
                 bootstrapper.InitContainer(this);
             });
+
+            Router.Navigate<TimeViewModel>();
         }
 
         private void ConfigureRouter()
@@ -52,35 +57,29 @@ namespace AchtGewinnt.Views
 
                 Debug.WriteLine($"Navigate to {currentViewModel?.UrlPathSegment}");
             });
+
         }
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
-            "ViewModel", typeof(ShellViewModel), typeof(Shell), new PropertyMetadata(default(ShellViewModel)));
+            nameof(ViewModel), typeof(ShellViewModel), typeof(Shell), new PropertyMetadata(default(ShellViewModel)));
 
         public ShellViewModel ViewModel
         {
-            get => (ShellViewModel) GetValue(ViewModelProperty);
+            get => (ShellViewModel)GetValue(ViewModelProperty);
             set => SetValue(ViewModelProperty, value);
         }
 
         object IViewFor.ViewModel
         {
             get => ViewModel;
-            set => ViewModel = (ShellViewModel) value;
+            set => ViewModel = (ShellViewModel)value;
         }
 
         public RoutingState Router { get; } = new RoutingState();
 
-        private void NavTimeButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            var destViewModel = (IRoutableViewModel) Locator.Current.GetService(typeof(TimeViewModel));
-            Router.Navigate.Execute(destViewModel);
-        }
 
-        private void NavMeetingButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            var destViewModel = (IRoutableViewModel)Locator.Current.GetService(typeof(MeetingViewModel));
-            Router.Navigate.Execute(destViewModel);
-        }
+        private void NavTimeButton_OnClick(object sender, RoutedEventArgs e) => Router.Navigate<TimeViewModel>();
+
+        private void NavMeetingButton_OnClick(object sender, RoutedEventArgs e) => Router.Navigate<MeetingViewModel>();
     }
 }

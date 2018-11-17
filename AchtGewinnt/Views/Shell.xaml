@@ -5,8 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:reactiveUi="using:ReactiveUI"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -14,15 +14,33 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Vertical" Grid.Column="0">
-        <Button x:Name="TestButton" HorizontalAlignment="Center" VerticalAlignment="Center">Moin</Button>
-            <Button x:Name="NavTimeButton" HorizontalAlignment="Center" VerticalAlignment="Center" Click="NavTimeButton_OnClick">Zeit</Button>
-            <Button x:Name="NavMeetingButton" HorizontalAlignment="Center" VerticalAlignment="Center" Click="NavMeetingButton_OnClick">Meeting</Button>
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <Button
+                x:Name="TestButton"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                Moin
+            </Button>
+            <Button
+                x:Name="NavTimeButton"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="NavTimeButton_OnClick">
+                Zeit
+            </Button>
+            <Button
+                x:Name="NavMeetingButton"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="NavMeetingButton_OnClick">
+                Meeting
+            </Button>
         </StackPanel>
 
-        <reactiveUi:RoutedViewHost x:Name="RoutedViewHost"
-                                   Grid.Column="1"
-                                   Router="{x:Bind Router}" />
+        <reactiveUi:RoutedViewHost
+            x:Name="RoutedViewHost"
+            Grid.Column="1"
+            Router="{x:Bind Router}" />
 
     </Grid>
 </Page>

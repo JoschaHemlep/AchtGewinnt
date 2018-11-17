@@ -4,10 +4,24 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
 
-    <Grid Background="Red">
+    <StackPanel>
         <TextBlock FontSize="24">Time</TextBlock>
-    </Grid>
+        <ToggleButton x:Name="WorkButton">
+            <StackPanel>
+                <TextBlock>Start</TextBlock>
+                <TextBlock>Work</TextBlock>
+            </StackPanel>
+        </ToggleButton>
+
+        <ToggleButton x:Name="PauseButton" IsEnabled="{Binding ElementName=WorkButton, Path=IsEnabled, Mode=OneWay}">
+            <StackPanel>
+                <TextBlock>Start</TextBlock>
+                <TextBlock>Pause</TextBlock>
+            </StackPanel>
+        </ToggleButton>
+
+    </StackPanel>
 </Page>
