@@ -1,10 +1,11 @@
-﻿using Windows.UI.Xaml;
-using AchtGewinnt.ViewModels;
+﻿using AchtGewinnt.ViewModels;
 using ReactiveUI;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
-namespace AchtGewinnt.Views
+namespace AchtGewinnt.UWP.Views
 {
-    public sealed partial class MeetingView : IViewFor<MeetingViewModel>
+    public sealed partial class MeetingView : Page, IViewFor<MeetingViewModel>
     {
         public MeetingView()
         {
@@ -12,11 +13,11 @@ namespace AchtGewinnt.Views
         }
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
-            "ViewModel", typeof(MeetingViewModel), typeof(MeetingView), new PropertyMetadata(default(MeetingViewModel)));
+            nameof(ViewModel), typeof(MeetingViewModel), typeof(MeetingView), new PropertyMetadata(default(MeetingViewModel)));
 
         public MeetingViewModel ViewModel
         {
-            get => (MeetingViewModel) GetValue(ViewModelProperty);
+            get => (MeetingViewModel)GetValue(ViewModelProperty);
             set => SetValue(ViewModelProperty, value);
         }
 
@@ -26,6 +27,6 @@ namespace AchtGewinnt.Views
             set => ViewModel = (MeetingViewModel)value;
         }
 
-       
+
     }
 }

@@ -1,16 +1,17 @@
 ﻿
 using System;
 using System.Diagnostics;
-using AchtGewinnt.ExtensionMethods;
+using AchtGewinnt.UWP.ExtensionMethods;
 using AchtGewinnt.ViewModels;
 using ReactiveUI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using EventsMixin = Windows.UI.Xaml.EventsMixin;
 
-namespace AchtGewinnt.Views
+namespace AchtGewinnt.UWP.Views
 {
-    public sealed partial class Shell : IScreen, IViewFor<ShellViewModel>
+    public sealed partial class Shell : Page, IScreen, IViewFor<ShellViewModel>
     {
         private bool canExecute;
 
@@ -32,7 +33,10 @@ namespace AchtGewinnt.Views
 
             ConfigureRouter();
 
-            this.WhenActivated(disposables => { this.BindCommand(ViewModel, vm => vm.TestCommand, v => v.TestButton); });
+            this.WhenActivated(disposables =>
+            {
+                //
+            });
 
             // OnLoaded
             EventsMixin.Events(this).Loaded.Subscribe(_ =>
@@ -40,9 +44,10 @@ namespace AchtGewinnt.Views
                 // Init Bootstrapper (IoC-Container etc.)
                 var bootstrapper = new Bootstrapper();
                 bootstrapper.InitContainer(this);
+
+                Router.Navigate<TimeViewModel>();
             });
 
-            Router.Navigate<TimeViewModel>();
         }
 
         private void ConfigureRouter()

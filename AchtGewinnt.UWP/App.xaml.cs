@@ -1,12 +1,12 @@
 ﻿using System;
-using AchtGewinnt.Views;
+using AchtGewinnt.UWP.Views;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace AchtGewinnt
+namespace AchtGewinnt.UWP
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

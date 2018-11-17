@@ -1,10 +1,10 @@
-﻿using AchtGewinnt.ViewModels;
-using AchtGewinnt.Views;
+﻿using AchtGewinnt.UWP.Views;
+using AchtGewinnt.ViewModels;
 using ReactiveUI;
 using Splat;
 using Windows.UI.Xaml.Controls;
 
-namespace AchtGewinnt
+namespace AchtGewinnt.UWP
 {
     public class Bootstrapper
     {

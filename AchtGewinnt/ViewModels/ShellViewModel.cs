@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
 using ReactiveUI;
 
 namespace AchtGewinnt.ViewModels
@@ -23,14 +23,7 @@ namespace AchtGewinnt.ViewModels
 
         public async Task DisplayMoinDialog()
         {
-            var dialog = new ContentDialog
-            {
-                Title = "AchtGewinnt",
-                Content = "Zeit für Feierabend.",
-                CloseButtonText = "Ok"
-            };
-
-            var result = await dialog.ShowAsync();
+            Debug.WriteLine("DisplayMoinDialog");
         }
 
     }

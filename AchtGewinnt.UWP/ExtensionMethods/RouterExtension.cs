@@ -2,7 +2,7 @@
 using ReactiveUI;
 using Splat;
 
-namespace AchtGewinnt.ExtensionMethods
+namespace AchtGewinnt.UWP.ExtensionMethods
 {
     public static class RouterExtension
     {
