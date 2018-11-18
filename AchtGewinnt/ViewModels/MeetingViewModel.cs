@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using AchtGewinnt.Models;
 using DynamicData;
 using ReactiveUI;
@@ -13,23 +14,27 @@ namespace AchtGewinnt.ViewModels
     public class MeetingViewModel : ReactiveObject, IRoutableViewModel, IDisposable
     {
         private ReadOnlyObservableCollection<Meeting> meetings4View;
+        private readonly Interaction<string, bool> confirmRemoveInteraction;
 
         private void AddMeeting()
         {
             Meetings.Add(new Meeting { Title = "New Meeting", Date = DateTime.Now, Description = "Test x" });
         }
 
-        private void RemoveSelectedMeeting()
+        private async Task RemoveSelectedMeeting()
         {
-            // ToDo Confirmation Dialog
+            var result = await confirmRemoveInteraction.Handle($"Remove this Meeting \"{SelectedMeeting.Title}\"?");
 
-            var meetingToRemove = SelectedMeeting;
+            if (result)
+            {
+                var meetingToRemove = SelectedMeeting;
 
-            // Select another meeting
-            SelectedMeeting = Meetings4View.FirstOrDefault(_ => _ != SelectedMeeting);
+                // Select another meeting
+                SelectedMeeting = Meetings4View.FirstOrDefault(_ => _ != SelectedMeeting);
 
-            // Remove Meeting
-            Meetings.Remove(meetingToRemove);
+                // Remove Meeting
+                Meetings.Remove(meetingToRemove);
+            }
         }
 
         public MeetingViewModel()
@@ -52,8 +57,12 @@ namespace AchtGewinnt.ViewModels
             Meetings.Add(new Meeting { Date = DateTime.Now, Title = "Weekly", Description = "Test 1" });
             Meetings.Add(new Meeting { Date = DateTime.Now.AddDays(1), Title = "Refinement", Description = "Test 2" });
 
+            // Interactions
+            confirmRemoveInteraction = new Interaction<string, bool>();
+
+            // Commands
             AddMeetingCommand = ReactiveCommand.Create(() => AddMeeting());
-            RemoveMeetingCommand = ReactiveCommand.Create(RemoveSelectedMeeting);
+            RemoveMeetingCommand = ReactiveCommand.CreateFromTask(RemoveSelectedMeeting);
 
         }
 
@@ -70,9 +79,12 @@ namespace AchtGewinnt.ViewModels
             set => this.RaiseAndSetIfChanged(ref selectedMeeting, value);
         }
 
+        // Commands
         public ReactiveCommand<Unit, Unit> AddMeetingCommand { get; }
         public ReactiveCommand<Unit, Unit> RemoveMeetingCommand { get; }
 
+        // Interactions
+        public Interaction<string, bool> ConfirmRemoveInteraction => confirmRemoveInteraction;
 
         public string UrlPathSegment { get; } = nameof(MeetingViewModel);
         public IScreen HostScreen { get; }
