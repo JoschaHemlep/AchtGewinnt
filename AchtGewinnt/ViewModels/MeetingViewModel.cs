@@ -54,6 +54,7 @@ namespace AchtGewinnt.ViewModels
                     Debug.WriteLine(_);
                 });
 
+            // ToDo remove test meetings
             Meetings.Add(new Meeting { Date = DateTime.Now, Title = "Weekly", Description = "Test 1" });
             Meetings.Add(new Meeting { Date = DateTime.Now.AddDays(1), Title = "Refinement", Description = "Test 2" });
 
