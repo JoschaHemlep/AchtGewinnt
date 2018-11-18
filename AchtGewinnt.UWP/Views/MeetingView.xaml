@@ -11,6 +11,7 @@
     <StackPanel>
         <TextBlock FontSize="24">Meeting</TextBlock>
         <StackPanel Orientation="Horizontal">
+
             <StackPanel Orientation="Vertical">
                 <Button x:Name="AddMeetingButton" Command="{x:Bind ViewModel.AddMeetingCommand}">Add Meeting</Button>
                 <ListBox
@@ -29,6 +30,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
+
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -51,6 +53,7 @@
                     Remove
                 </Button>
             </StackPanel>
+
         </StackPanel>
 
     </StackPanel>

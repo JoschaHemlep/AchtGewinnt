@@ -1,4 +1,5 @@
-﻿using AchtGewinnt.UWP.Views;
+﻿using AchtGewinnt.Services;
+using AchtGewinnt.UWP.Views;
 using AchtGewinnt.ViewModels;
 using ReactiveUI;
 using Splat;
@@ -12,6 +13,8 @@ namespace AchtGewinnt.UWP
         {
             Locator.CurrentMutable.RegisterConstant(shell, typeof(IScreen));
 
+            // Services
+            Locator.CurrentMutable.Register(() => new EnumService(), typeof(IEnumService));
 
             // Views
             Locator.CurrentMutable.Register(() => shell, typeof(IViewFor<ShellViewModel>));
