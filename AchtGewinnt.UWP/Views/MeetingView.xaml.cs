@@ -15,12 +15,6 @@ namespace AchtGewinnt.UWP.Views
             {
 #pragma warning disable CC0031 // Check for null before calling a delegate
                 d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
-                d(this.OneWayBind(ViewModel, vm => vm.Meetings4View, v => v.MeetingList.ItemsSource));
-                d(this.Bind(ViewModel, vm => vm.SelectedMeeting, v => v.MeetingList.SelectedItem));
-                d(this.Bind(ViewModel, vm => vm.SelectedMeeting.Title, v => v.Title.Text));
-                // ToDo
-                //d(this.Bind(ViewModel, vm => vm.SelectedMeeting.Date, v => v.Date.Date));
-                d(this.Bind(ViewModel, vm => vm.SelectedMeeting.Description, v => v.Description.Text));
 #pragma warning restore CC0031 // Check for null before calling a delegate
             });
         }

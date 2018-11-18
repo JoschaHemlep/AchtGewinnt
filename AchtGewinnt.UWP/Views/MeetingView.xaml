@@ -12,14 +12,16 @@
         <TextBlock FontSize="24">Meeting</TextBlock>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical">
-                <Button x:Name="AddMeetingButton">Add Meeting</Button>
+                <Button x:Name="AddMeetingButton" Command="{x:Bind ViewModel.AddMeetingCommand}">Add Meeting</Button>
                 <ListBox
                     x:Name="MeetingList"
                     Width="200"
+                    ItemsSource="{x:Bind ViewModel.Meetings4View, Mode=OneWay}"
+                    SelectedItem="{x:Bind ViewModel.SelectedMeeting, Mode=TwoWay}"
                     SelectionMode="Single">
                     <ListBox.ItemTemplate>
                         <DataTemplate x:DataType="models:Meeting">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
                                 <TextBlock Foreground="White" Text="{x:Bind Title, Mode=OneWay}" />
                                 <TextBlock Foreground="White" Text="{x:Bind Date, Mode=OneWay}" />
                             </StackPanel>
@@ -28,10 +30,26 @@
                 </ListBox>
             </StackPanel>
             <StackPanel>
-                <ComboBox x:Name="Rating" />
-                <TextBox x:Name="Title" />
-                <DatePicker x:Name="Date" />
-                <TextBox x:Name="Description" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="Rating" Grid.Column="0" />
+                    <TextBox
+                        x:Name="Title"
+                        Grid.Column="1"
+                        Text="{x:Bind ViewModel.SelectedMeeting.Title, Mode=TwoWay}" />
+                    <DatePicker
+                        x:Name="Date"
+                        Grid.Column="2"
+                        Date="{x:Bind ViewModel.SelectedMeeting.Date, Mode=TwoWay}" />
+                </Grid>
+                <TextBox x:Name="Description" Text="{x:Bind ViewModel.SelectedMeeting.Description, Mode=TwoWay}" />
+                <Button x:Name="RemoveMeetingButton" Command="{x:Bind ViewModel.RemoveMeetingCommand}">
+                    Remove
+                </Button>
             </StackPanel>
         </StackPanel>
 
