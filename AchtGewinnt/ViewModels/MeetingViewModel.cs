@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -6,8 +7,10 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AchtGewinnt.Models;
+using AchtGewinnt.Services;
 using DynamicData;
 using ReactiveUI;
+using Splat;
 
 namespace AchtGewinnt.ViewModels
 {
@@ -37,8 +40,12 @@ namespace AchtGewinnt.ViewModels
             }
         }
 
-        public MeetingViewModel()
+        public MeetingViewModel(IEnumService enumService = null)
         {
+            this.enumService = enumService ?? Locator.Current.GetService<IEnumService>();
+
+            MeetingRatings = this.enumService.EnumToList<MeetingRating>();
+
             Meetings = new SourceList<Meeting>();
             Meetings.AsObservableList()
                 .Connect()
@@ -55,8 +62,8 @@ namespace AchtGewinnt.ViewModels
                 });
 
             // ToDo remove test meetings
-            Meetings.Add(new Meeting { Date = DateTime.Now, Title = "Weekly", Description = "Test 1" });
-            Meetings.Add(new Meeting { Date = DateTime.Now.AddDays(1), Title = "Refinement", Description = "Test 2" });
+            Meetings.Add(new Meeting { Date = DateTime.Now, Title = "Weekly", Description = "Test 1", Rating = MeetingRating.None });
+            Meetings.Add(new Meeting { Date = DateTime.Now.AddDays(1), Title = "Refinement", Description = "Test 2", Rating = MeetingRating.Good });
 
             // Interactions
             confirmRemoveInteraction = new Interaction<string, bool>();
@@ -66,6 +73,10 @@ namespace AchtGewinnt.ViewModels
             RemoveMeetingCommand = ReactiveCommand.CreateFromTask(RemoveSelectedMeeting);
 
         }
+
+        private readonly IEnumService enumService;
+
+        public IList<MeetingRating> MeetingRatings { get; private set; }
 
         public SourceList<Meeting> Meetings { get; set; }
 

@@ -3,7 +3,7 @@
     public enum MeetingRating
     {
         None,
-        Great,
+        Awesome,
         Good,
         Neutral,
         Bad,

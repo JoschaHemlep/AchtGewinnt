@@ -38,7 +38,11 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <ComboBox x:Name="Rating" Grid.Column="0" />
+                    <ComboBox
+                        x:Name="Rating"
+                        Grid.Column="0"
+                        ItemsSource="{x:Bind ViewModel.MeetingRatings, Mode=OneTime}"
+                        SelectedItem="{x:Bind ViewModel.SelectedMeeting.Rating, Mode=TwoWay}" />
                     <TextBox
                         x:Name="Title"
                         Grid.Column="1"
