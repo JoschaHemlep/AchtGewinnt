@@ -14,22 +14,23 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Orientation="Vertical">
-            <Button
-                x:Name="NavTimeButton"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Click="NavTimeButton_OnClick">
-                Time
-            </Button>
-            <Button
-                x:Name="NavMeetingsButton"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Click="NavMeetingsButton_OnClick">
-                Meetings
-            </Button>
-        </StackPanel>
+        <NavigationView
+            x:Name="Navigation"
+            Grid.Column="0"
+            ExpandedModeThresholdWidth="0"
+            IsPaneOpen="True"
+            IsPaneToggleButtonVisible="False">
+            <NavigationView.MenuItems>
+                <NavigationViewItem
+                    Content="Time"
+                    Icon="Calendar"
+                    Tapped="NavTimeButton_OnClick" />
+                <NavigationViewItem
+                    Content="Meetings"
+                    Icon="People"
+                    Tapped="NavMeetingsButton_OnClick" />
+            </NavigationView.MenuItems>
+        </NavigationView>
 
         <reactiveUi:RoutedViewHost
             x:Name="RoutedViewHost"
