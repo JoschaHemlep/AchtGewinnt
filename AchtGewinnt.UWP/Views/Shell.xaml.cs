@@ -85,6 +85,6 @@ namespace AchtGewinnt.UWP.Views
 
         private void NavTimeButton_OnClick(object sender, RoutedEventArgs e) => Router.Navigate<TimeViewModel>();
 
-        private void NavMeetingButton_OnClick(object sender, RoutedEventArgs e) => Router.Navigate<MeetingViewModel>();
+        private void NavMeetingsButton_OnClick(object sender, RoutedEventArgs e) => Router.Navigate<MeetingViewModel>();
     }
 }

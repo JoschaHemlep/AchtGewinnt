@@ -23,11 +23,11 @@
                 Time
             </Button>
             <Button
-                x:Name="NavMeetingButton"
+                x:Name="NavMeetingsButton"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Click="NavMeetingButton_OnClick">
-                Meeting
+                Click="NavMeetingsButton_OnClick">
+                Meetings
             </Button>
         </StackPanel>
 
