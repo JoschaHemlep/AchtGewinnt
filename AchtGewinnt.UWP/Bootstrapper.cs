@@ -17,14 +17,16 @@ namespace AchtGewinnt.UWP
             Locator.CurrentMutable.Register(() => new EnumService(), typeof(IEnumService));
 
             // Views
-            Locator.CurrentMutable.Register(() => shell, typeof(IViewFor<ShellViewModel>));
-            Locator.CurrentMutable.Register(() => new TimeView(), typeof(IViewFor<TimeViewModel>));
-            Locator.CurrentMutable.Register(() => new MeetingView(), typeof(IViewFor<MeetingViewModel>));
+            Locator.CurrentMutable.Register(() => shell, typeof(IViewFor<IShellViewModel>));
+            Locator.CurrentMutable.Register(() => new TimeView(), typeof(IViewFor<ITimeViewModel>));
+            Locator.CurrentMutable.Register(() => new MeetingView(), typeof(IViewFor<IMeetingViewModel>));
+            Locator.CurrentMutable.Register(() => new Views.CalendarView(), typeof(IViewFor<ICalendarViewModel>));
 
             // ViewModels
-            Locator.CurrentMutable.RegisterConstant(new ShellViewModel(), typeof(ShellViewModel));
-            Locator.CurrentMutable.RegisterConstant(new TimeViewModel(), typeof(TimeViewModel));
-            Locator.CurrentMutable.RegisterConstant(new MeetingViewModel(), typeof(MeetingViewModel));
+            Locator.CurrentMutable.RegisterConstant(new ShellViewModel(), typeof(IShellViewModel));
+            Locator.CurrentMutable.RegisterConstant(new TimeViewModel(), typeof(ITimeViewModel));
+            Locator.CurrentMutable.RegisterConstant(new MeetingViewModel(), typeof(IMeetingViewModel));
+            Locator.CurrentMutable.RegisterConstant(new CalendarViewModel(), typeof(ICalendarViewModel));
 
 
             shell.DataContext = Locator.Current.GetService<ShellViewModel>();

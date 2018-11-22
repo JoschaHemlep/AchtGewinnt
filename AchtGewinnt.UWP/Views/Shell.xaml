@@ -23,12 +23,16 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem
                     Content="Time"
-                    Icon="Calendar"
+                    Icon="CalendarDay"
                     Tapped="NavTimeButton_OnClick" />
                 <NavigationViewItem
                     Content="Meetings"
                     Icon="People"
                     Tapped="NavMeetingsButton_OnClick" />
+                <NavigationViewItem
+                    Content="Calendar"
+                    Icon="Calendar"
+                    Tapped="NavCalendarButton_OnClick" />
             </NavigationView.MenuItems>
         </NavigationView>
 

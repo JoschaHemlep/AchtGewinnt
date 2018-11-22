@@ -5,7 +5,7 @@ using ReactiveUI;
 
 namespace AchtGewinnt.ViewModels
 {
-    public class ShellViewModel : ReactiveObject, ISupportsActivation
+    public class ShellViewModel : ReactiveObject, IShellViewModel
     {
         public ShellViewModel()
         {
@@ -19,8 +19,6 @@ namespace AchtGewinnt.ViewModels
         }
 
         public ViewModelActivator Activator { get; }
-
-        public ReactiveCommand<Unit, Unit> TestCommand { get; set; }
 
 
     }

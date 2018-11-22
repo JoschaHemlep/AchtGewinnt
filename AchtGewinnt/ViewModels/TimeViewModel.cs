@@ -3,7 +3,7 @@ using ReactiveUI;
 
 namespace AchtGewinnt.ViewModels
 {
-    public class TimeViewModel : ReactiveObject, IRoutableViewModel
+    public class TimeViewModel : ReactiveObject, ITimeViewModel
     {
 
         private void StartWorkTimer()

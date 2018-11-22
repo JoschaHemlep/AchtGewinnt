@@ -14,7 +14,7 @@ using Splat;
 
 namespace AchtGewinnt.ViewModels
 {
-    public class MeetingViewModel : ReactiveObject, IRoutableViewModel, IDisposable
+    public class MeetingViewModel : ReactiveObject, IMeetingViewModel
     {
         private ReadOnlyObservableCollection<Meeting> meetings4View;
         private readonly Interaction<string, bool> confirmRemoveInteraction;
