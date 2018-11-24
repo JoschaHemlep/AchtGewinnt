@@ -1,0 +1,96 @@
+﻿<Page
+    x:Class="AchtGewinnt.UWP.Views.MoodView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:AchtGewinnt.UWP.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:AchtGewinnt.Models"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <converter:MoodRatingToBoolConverter x:Key="MoodRatingToBoolConverter" />
+        <DataTemplate x:Key="MoodTemplate" x:DataType="models:Mood">
+            <Border Margin="10" Background="Blue">
+                <StackPanel>
+                    <TextBlock Text="{x:Bind Rating}" />
+                    <TextBlock Text="{x:Bind Date}" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock
+            x:Name="Headline"
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            FontSize="24"
+            Foreground="Red">
+            Mood Calendar
+        </TextBlock>
+
+
+        <GridView
+            Grid.Row="1"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            CanDragItems="False"
+            IsItemClickEnabled="False"
+            IsSwipeEnabled="False"
+            ItemTemplate="{StaticResource MoodTemplate}"
+            ItemsSource="{x:Bind ViewModel.Moods4View, Mode=OneWay}"
+            SelectedItem="{x:Bind ViewModel.SelectedMood, Mode=TwoWay}"
+            SelectionMode="Single" />
+
+        <TextBlock
+            x:Name="SelectedDateTextBlock"
+            Grid.Row="1"
+            Grid.Column="1"
+            Text="{x:Bind ViewModel.SelectedMood.Date, Mode=OneWay}" />
+
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="1"
+            Orientation="Horizontal">
+            <!--  ToDo Improve ConverterParameter  -->
+            <RadioButton
+                x:Name="YeahRadioButton"
+                Content=":-)"
+                IsChecked="{x:Bind Path=ViewModel.SelectedMood.Rating, Converter={StaticResource MoodRatingToBoolConverter}, ConverterParameter=Yeah, Mode=TwoWay}"
+                ToolTipService.ToolTip="Good day" />
+            <RadioButton
+                x:Name="MehRadioButton"
+                Content=":-|"
+                IsChecked="{x:Bind Path=ViewModel.SelectedMood.Rating, Converter={StaticResource MoodRatingToBoolConverter}, ConverterParameter=Meh, Mode=TwoWay}"
+                ToolTipService.ToolTip="Meh, was okay" />
+            <RadioButton
+                x:Name="ArghRadioButton"
+                Content=":-("
+                IsChecked="{x:Bind Path=ViewModel.SelectedMood.Rating, Converter={StaticResource MoodRatingToBoolConverter}, ConverterParameter=NotMyDay, Mode=TwoWay}"
+                ToolTipService.ToolTip="Not my day, not my day at all!" />
+        </StackPanel>
+
+
+        <TextBox
+            x:Name="DateComment"
+            Grid.Row="3"
+            Grid.Column="1"
+            PlaceholderText="Describe your day"
+            Text="{x:Bind ViewModel.SelectedMood.Description, Mode=TwoWay}" />
+
+    </Grid>
+</Page>

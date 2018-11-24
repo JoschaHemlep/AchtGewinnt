@@ -30,9 +30,9 @@
                     Icon="People"
                     Tapped="NavMeetingsButton_OnClick" />
                 <NavigationViewItem
-                    Content="Calendar"
+                    Content="Mood Calendar"
                     Icon="Calendar"
-                    Tapped="NavCalendarButton_OnClick" />
+                    Tapped="NavMoodCalendarButton_OnClick" />
             </NavigationView.MenuItems>
         </NavigationView>
 

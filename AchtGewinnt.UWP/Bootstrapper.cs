@@ -20,13 +20,13 @@ namespace AchtGewinnt.UWP
             Locator.CurrentMutable.Register(() => shell, typeof(IViewFor<IShellViewModel>));
             Locator.CurrentMutable.Register(() => new TimeView(), typeof(IViewFor<ITimeViewModel>));
             Locator.CurrentMutable.Register(() => new MeetingView(), typeof(IViewFor<IMeetingViewModel>));
-            Locator.CurrentMutable.Register(() => new Views.CalendarView(), typeof(IViewFor<ICalendarViewModel>));
+            Locator.CurrentMutable.Register(() => new Views.MoodView(), typeof(IViewFor<IMoodViewModel>));
 
             // ViewModels
             Locator.CurrentMutable.RegisterConstant(new ShellViewModel(), typeof(IShellViewModel));
             Locator.CurrentMutable.RegisterConstant(new TimeViewModel(), typeof(ITimeViewModel));
             Locator.CurrentMutable.RegisterConstant(new MeetingViewModel(), typeof(IMeetingViewModel));
-            Locator.CurrentMutable.RegisterConstant(new CalendarViewModel(), typeof(ICalendarViewModel));
+            Locator.CurrentMutable.RegisterConstant(new MoodViewModel(), typeof(IMoodViewModel));
 
 
             shell.DataContext = Locator.Current.GetService<ShellViewModel>();
