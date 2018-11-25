@@ -1,5 +1,6 @@
 ﻿using System;
 using AchtGewinnt.Models;
+using AchtGewinnt.Services;
 using AchtGewinnt.ViewModels;
 using DynamicData;
 using FluentAssertions;
@@ -14,7 +15,8 @@ namespace AchtGewinnt.Tests.ViewModels
         [SetUp]
         public void SetUp()
         {
-            viewModel = new MeetingViewModel();
+            var enumService = new EnumService();
+            viewModel = new MeetingViewModel(enumService);
         }
 
         [TestCase(true, TestName = "Remove meeting confirmed")]
