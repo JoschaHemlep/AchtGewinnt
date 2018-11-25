@@ -11,6 +11,11 @@ namespace AchtGewinnt.Models
 
         public DateTimeOffset Date { get => date; set => this.RaiseAndSetIfChanged(ref date, value); }
         public string Description { get => description; set => this.RaiseAndSetIfChanged(ref description, value); }
-        public MoodRating Rating { get => rating; set => this.RaiseAndSetIfChanged(ref rating, value); }
+        public MoodRating Rating
+        {
+            get => rating;
+            set => this.RaiseAndSetIfChanged(ref rating, value);
+        }
+
     }
 }

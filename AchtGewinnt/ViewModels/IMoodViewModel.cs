@@ -12,5 +12,6 @@ namespace AchtGewinnt.ViewModels
         ReactiveCommand<Unit, Unit> AddMoodCommand { get; }
         ReactiveCommand<Unit, Unit> RemoveMoodCommand { get; }
         Mood SelectedMood { get; set; }
+
     }
 }

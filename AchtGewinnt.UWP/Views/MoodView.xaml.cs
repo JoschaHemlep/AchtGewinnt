@@ -23,7 +23,6 @@ namespace AchtGewinnt.UWP.Views
 #pragma warning disable CC0031 // Check for null before calling a delegate
                 d(this.WhenAnyValue(x => x.ViewModel).BindTo(this, x => x.DataContext));
 
-
                 // Interactions
                 d(ViewModel.ConfirmRemoveInteraction.RegisterHandler(async interaction =>
                 {

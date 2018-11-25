@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using AchtGewinnt.Models;
 using AchtGewinnt.Services;
 using DynamicData;
+using DynamicData.Binding;
 using ReactiveUI;
 using Splat;
 
@@ -21,7 +22,9 @@ namespace AchtGewinnt.ViewModels
 
         private void AddMeeting()
         {
-            Meetings.Add(new Meeting { Title = "New Meeting", Date = DateTime.Now, Description = "Test x" });
+            var newMeeting = new Meeting { Title = "New Meeting", Date = DateTime.Now, Description = "Test x" };
+            Meetings.Add(newMeeting);
+            SelectedMeeting = newMeeting;
         }
 
         private async Task RemoveSelectedMeeting()
@@ -50,6 +53,7 @@ namespace AchtGewinnt.ViewModels
             Meetings.AsObservableList()
                 .Connect()
                 .ObserveOn(RxApp.MainThreadScheduler)
+                .Sort(SortExpressionComparer<Meeting>.Descending(_ => _.Date), resort: this.WhenAnyValue(_ => _.SelectedMeeting.Date).Select(_ => Unit.Default))
                 .Bind(out meetings4View)
                 .Subscribe(_ =>
                 {

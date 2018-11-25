@@ -12,10 +12,13 @@
     <Page.Resources>
         <converter:MoodRatingToBoolConverter x:Key="MoodRatingToBoolConverter" />
         <DataTemplate x:Key="MoodTemplate" x:DataType="models:Mood">
-            <Border Margin="10" Background="Blue">
+            <Border
+                Width="150"
+                Height="150"
+                Background="Indigo">
                 <StackPanel>
-                    <TextBlock Text="{x:Bind Rating}" />
-                    <TextBlock Text="{x:Bind Date}" />
+                    <TextBlock Text="{Binding Rating, Mode=OneWay}" />
+                    <TextBlock Text="{Binding Date, Mode=OneWay}" />
                 </StackPanel>
             </Border>
         </DataTemplate>
@@ -27,22 +30,33 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock
-            x:Name="Headline"
+        <StackPanel
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            FontSize="24"
-            Foreground="Red">
-            Mood Calendar
-        </TextBlock>
+            Orientation="Horizontal">
+            <TextBlock
+                x:Name="Headline"
+                FontSize="24"
+                Foreground="Red">
+                Mood Calendar
+            </TextBlock>
 
+            <Button
+                x:Name="AddMoodButton"
+                Grid.Row="0"
+                Grid.Column="0"
+                Command="{x:Bind ViewModel.AddMoodCommand}">
+                Add Mood
+            </Button>
+        </StackPanel>
 
         <GridView
             Grid.Row="1"
@@ -53,34 +67,33 @@
             IsSwipeEnabled="False"
             ItemTemplate="{StaticResource MoodTemplate}"
             ItemsSource="{x:Bind ViewModel.Moods4View, Mode=OneWay}"
-            SelectedItem="{x:Bind ViewModel.SelectedMood, Mode=TwoWay}"
+            SelectedItem="{Binding SelectedMood, Mode=TwoWay}"
             SelectionMode="Single" />
 
-        <TextBlock
-            x:Name="SelectedDateTextBlock"
+        <DatePicker
+            x:Name="Date"
             Grid.Row="1"
             Grid.Column="1"
-            Text="{x:Bind ViewModel.SelectedMood.Date, Mode=OneWay}" />
+            Date="{x:Bind ViewModel.SelectedMood.Date, Mode=TwoWay}" />
 
         <StackPanel
             Grid.Row="2"
             Grid.Column="1"
             Orientation="Horizontal">
-            <!--  ToDo Improve ConverterParameter  -->
             <RadioButton
                 x:Name="YeahRadioButton"
                 Content=":-)"
-                IsChecked="{x:Bind Path=ViewModel.SelectedMood.Rating, Converter={StaticResource MoodRatingToBoolConverter}, ConverterParameter=Yeah, Mode=TwoWay}"
+                IsChecked="{Binding SelectedMood.Rating, Converter={StaticResource MoodRatingToBoolConverter}, ConverterParameter=1, Mode=TwoWay}"
                 ToolTipService.ToolTip="Good day" />
             <RadioButton
                 x:Name="MehRadioButton"
                 Content=":-|"
-                IsChecked="{x:Bind Path=ViewModel.SelectedMood.Rating, Converter={StaticResource MoodRatingToBoolConverter}, ConverterParameter=Meh, Mode=TwoWay}"
+                IsChecked="{Binding SelectedMood.Rating, Converter={StaticResource MoodRatingToBoolConverter}, ConverterParameter=2, Mode=TwoWay}"
                 ToolTipService.ToolTip="Meh, was okay" />
             <RadioButton
-                x:Name="ArghRadioButton"
+                x:Name="NotMyDayRadioButton"
                 Content=":-("
-                IsChecked="{x:Bind Path=ViewModel.SelectedMood.Rating, Converter={StaticResource MoodRatingToBoolConverter}, ConverterParameter=NotMyDay, Mode=TwoWay}"
+                IsChecked="{Binding SelectedMood.Rating, Converter={StaticResource MoodRatingToBoolConverter}, ConverterParameter=3, Mode=TwoWay}"
                 ToolTipService.ToolTip="Not my day, not my day at all!" />
         </StackPanel>
 
@@ -91,6 +104,14 @@
             Grid.Column="1"
             PlaceholderText="Describe your day"
             Text="{x:Bind ViewModel.SelectedMood.Description, Mode=TwoWay}" />
+
+        <Button
+            x:Name="RemoveMoodButton"
+            Grid.Row="4"
+            Grid.Column="1"
+            Command="{x:Bind ViewModel.RemoveMoodCommand}">
+            Remove Mood
+        </Button>
 
     </Grid>
 </Page>

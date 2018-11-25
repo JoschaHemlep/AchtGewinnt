@@ -4,8 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using AchtGewinnt.Models;
 using DynamicData;
+using DynamicData.Binding;
 using ReactiveUI;
 
 namespace AchtGewinnt.ViewModels
@@ -22,6 +24,7 @@ namespace AchtGewinnt.ViewModels
             Moods.AsObservableList()
                 .Connect()
                 .ObserveOn(RxApp.MainThreadScheduler)
+                .Sort(SortExpressionComparer<Mood>.Descending(_ => _.Date), resort: this.WhenAnyValue(_ => _.SelectedMood.Date).Select(_ => Unit.Default))
                 .Bind(out moods4View)
                 .Subscribe(_ =>
                 {
@@ -34,21 +37,42 @@ namespace AchtGewinnt.ViewModels
                 });
 
             // ToDo remove test Moods
-            Moods.Add(new Mood { Date = DateTime.Now, Description = "Test 1", Rating = MoodRating.None });
-            Moods.Add(new Mood { Date = DateTime.Now.AddDays(1), Description = "Test 2", Rating = MoodRating.Yeah });
-            Moods.Add(new Mood { Date = DateTime.Now.AddDays(2), Description = "Test 3", Rating = MoodRating.Meh });
-            Moods.Add(new Mood { Date = DateTime.Now.AddDays(3), Description = "Test 4", Rating = MoodRating.Meh });
-            Moods.Add(new Mood { Date = DateTime.Now.AddDays(4), Description = "Test 5", Rating = MoodRating.NotMyDay });
-            Moods.Add(new Mood { Date = DateTime.Now.AddDays(5), Description = "Test 6", Rating = MoodRating.Meh });
+            Moods.Add(new Mood { Id = 1, Date = DateTime.Today, Description = "Test 1", Rating = MoodRating.None });
+            Moods.Add(new Mood { Id = 2, Date = DateTime.Today.AddDays(1), Description = "Test 2", Rating = MoodRating.Yeah });
+            Moods.Add(new Mood { Id = 3, Date = DateTime.Today.AddDays(2), Description = "Test 3", Rating = MoodRating.Meh });
+            Moods.Add(new Mood { Id = 4, Date = DateTime.Today.AddDays(3), Description = "Test 4", Rating = MoodRating.Meh });
+            Moods.Add(new Mood { Id = 5, Date = DateTime.Today.AddDays(4), Description = "Test 5", Rating = MoodRating.NotMyDay });
+            Moods.Add(new Mood { Id = 6, Date = DateTime.Today.AddDays(5), Description = "Test 6", Rating = MoodRating.Meh });
 
             // Interactions
             confirmRemoveInteraction = new Interaction<string, bool>();
 
             // Commands 
-            // ToDo
-            //AddMoodCommand = ReactiveCommand.Create(() => AddMood());
-            //RemoveMoodCommand = ReactiveCommand.CreateFromTask(RemoveSelectedMood);
+            AddMoodCommand = ReactiveCommand.Create(() => AddMood());
+            RemoveMoodCommand = ReactiveCommand.CreateFromTask(RemoveSelectedMood);
+        }
 
+        private async Task RemoveSelectedMood()
+        {
+            var result = await confirmRemoveInteraction.Handle("Remove the Mood?");
+
+            if (result)
+            {
+                var meetingToRemove = SelectedMood;
+
+                // Select another meeting
+                SelectedMood = Moods4View.FirstOrDefault(_ => _ != SelectedMood);
+
+                // Remove Meeting
+                Moods.Remove(meetingToRemove);
+            }
+        }
+
+        private void AddMood()
+        {
+            var newMood = new Mood { Date = DateTime.Today };
+            Moods.Add(newMood);
+            SelectedMood = newMood;
         }
 
         public SourceList<Mood> Moods { get; set; }
@@ -63,6 +87,7 @@ namespace AchtGewinnt.ViewModels
             get => selectedMood;
             set => this.RaiseAndSetIfChanged(ref selectedMood, value);
         }
+
 
         // Commands
         public ReactiveCommand<Unit, Unit> AddMoodCommand { get; }

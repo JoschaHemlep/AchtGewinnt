@@ -33,7 +33,10 @@ namespace AchtGewinnt.UWP.Converter
 
             var param = parameter as string;
 
-            return parameter == null ? DependencyProperty.UnsetValue : Enum.Parse<MoodRating>(param);
+            var result = parameter == null ? DependencyProperty.UnsetValue : Enum.Parse<MoodRating>(param);
+
+
+            return result;
 
         }
 
