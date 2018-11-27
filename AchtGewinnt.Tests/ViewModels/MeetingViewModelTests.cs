@@ -4,23 +4,22 @@ using AchtGewinnt.Services;
 using AchtGewinnt.ViewModels;
 using DynamicData;
 using FluentAssertions;
-using NUnit.Framework;
+using Xunit;
 
 namespace AchtGewinnt.Tests.ViewModels
 {
     public class MeetingViewModelTests
     {
-        private MeetingViewModel viewModel;
+        private readonly MeetingViewModel viewModel;
 
-        [SetUp]
-        public void SetUp()
+        public MeetingViewModelTests()
         {
-            var enumService = new EnumService();
-            viewModel = new MeetingViewModel(enumService);
+            viewModel = new MeetingViewModel(new EnumService());
         }
 
-        [TestCase(true, TestName = "Remove meeting confirmed")]
-        [TestCase(false, TestName = "Remove meeting NOT confirmed")]
+        [Theory(DisplayName = nameof(RemoveSelectedMeetingTest))]
+        [InlineData(true)] // Remove meeting confirmed
+        [InlineData(false)] // Remove meeting NOT confirmed
         public void RemoveSelectedMeetingTest(bool confirm)
         {
             // Arrange
